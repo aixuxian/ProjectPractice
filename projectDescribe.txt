@@ -1,0 +1,14 @@
+MysqlHandler
+读入Hadoop文件系统上的数据库的配置信息：
+def saveMysql（data：DataFrame）={
+ 将data数据以append模式写入当前用户（当前用户在配置文件里是mysqlUserName）的数据库，
+ 需要向配置文件添加驱动信息为jdbc驱动
+ }
+ 
+ def updateMysql(sql: String)={
+ 用给定的sql更新数据库当前用户
+ }
+ 
+ def importMysqlTab(hc: HiveContext, tabNames: String*): Map[String, DataFrame] = {
+ 连接数据库，提取给定表名的数据
+ }

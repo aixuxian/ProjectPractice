@@ -1,0 +1,29 @@
+MysqlHandler
+加载配置信息：
+目的是为了读入Hadoop文件系统上的数据库的配置信息：
+Hadoop文件系统配置，给定文件路径，读入
+
+def saveMysql（data：DataFrame）={
+将数据库mysqlIp，mysqlPort，mysqlDataBase，mysqlUserName，mysqlPassWord读入
+将user和password字段替换成当前用户字段即mysqlUserName,mysqlPassWord
+向配置文件添加驱动信息为jdbc驱动
+配置打开数据的url信息
+打开数据库，以以append模式写入data
+}
+
+def updateMysql(sql: String){
+将数据库mysqlIp，mysqlPort，mysqlDataBase，mysqlUserName，mysqlPassWord读入
+将user和password字段替换成当前用户字段即mysqlUserName,mysqlPassWord
+向配置文件添加驱动信息为jdbc驱动
+创建sql连接
+创建statement
+执行sql
+}
+
+def importMysqlTab(hc: HiveContext, tabNames: String*): Map[String, DataFrame] = {
+将数据库mysqlIp，mysqlPort，mysqlDataBase，mysqlUserName，mysqlPassWord读入
+将user和password字段替换成当前用户字段即mysqlUserName,mysqlPassWord
+向配置文件添加驱动信息为jdbc驱动
+配置打开数据的url信息
+读取相应名称的数据
+}
