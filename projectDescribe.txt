@@ -26,6 +26,17 @@ def getAuthUserid(infoDatas: ArrayBuffer[(String, String, String, String, String
 根据authType类型，提取infoDatas中信息，authType为cal类型则提取第二项，authType为operate类型则提取第4项，其余都提取第四项
 将infoDatas中每一条权限类型与o2oAuths中有交集的项取出，提取用户ID
 }
+def changeState(infoDatas: ArrayBuffer[(String, String, String, String, String)], calTypes: String, state: Int, rank_date: String)={
+/**
+    * 更改mysql中job的状态
+    * @param infoDatas Tuple(id, cal_type, data_type, operate_type, export_path)
+    * @param calTypes 计算类型，1：画像，2：媒介，3：常驻地区，4：客群来源，5：客群去向，6：周边居民
+    * @param state 状态：0：未执行，1：计算中，2：成功，3：失败
+    * @param rank_date 日期
+    */
+将给定计算类型和sub_task_id（由$rank_date_$id组成）的state字段值更改为给定的state值
+}
+
 
 execute(jobId: String, hc: HiveContext, calTypes: String, firstSourceType: String,
               infoDatas: ArrayBuffer[(String, String, String, String, String)],

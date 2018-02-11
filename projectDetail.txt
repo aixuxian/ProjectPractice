@@ -42,6 +42,19 @@ def getAuthUserid(infoDatas: ArrayBuffer[(String, String, String, String, String
 将提取的type在给定的o2oAuths中的话，则可以取出
 提取infoDatas元素的第一项，并形成字符串
 }
+
+def changeState(infoDatas: ArrayBuffer[(String, String, String, String, String)], calTypes: String, state: Int, rank_date: String)={
+/**
+    * 更改mysql中job的状态
+    * @param infoDatas Tuple(id, cal_type, data_type, operate_type, export_path)
+    * @param calTypes 计算类型，1：画像，2：媒介，3：常驻地区，4：客群来源，5：客群去向，6：周边居民
+    * @param state 状态：0：未执行，1：计算中，2：成功，3：失败
+    * @param rank_date 日期
+    */
+解析出计算类型中的计算类型
+对于每一个计算类型，更改给定infoDatas中的id和rank_date组成的$rank_date_$id的sub_task_id字段及计算类型的state字段值值即可
+}
+
 execute(jobId: String, hc: HiveContext, calTypes: String, firstSourceType: String,
               infoDatas: ArrayBuffer[(String, String, String, String, String)],
               dataTypes: mutable.Set[String], rank_date: String, firstday: String,
