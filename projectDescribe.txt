@@ -1,14 +1,51 @@
 MysqlHandler
-����Hadoop�ļ�ϵͳ�ϵ����ݿ��������Ϣ��
-def saveMysql��data��DataFrame��={
- ��data������appendģʽд�뵱ǰ�û�����ǰ�û��������ļ�����mysqlUserName�������ݿ⣬
- ��Ҫ�������ļ�����������ϢΪjdbc����
+读入Hadoop文件系统上的数据库的配置信息：
+def saveMysql（data：DataFrame）={
+ 将data数据以append模式写入当前用户（当前用户在配置文件里是mysqlUserName）的数据库，
+ 需要向配置文件添加驱动信息为jdbc驱动
  }
  
  def updateMysql(sql: String)={
- �ø�����sql�������ݿ⵱ǰ�û�
+ 用给定的sql更新数据库当前用户
  }
  
  def importMysqlTab(hc: HiveContext, tabNames: String*): Map[String, DataFrame] = {
- �������ݿ⣬��ȡ��������������
+ 连接数据库，提取给定表名的数据
  }
+ 
+ 
+O2OHandler
+def getAuthUserid(infoDatas: ArrayBuffer[(String, String, String, String, String)], o2oAuths: String, authType: String)：String={
+/**
+    * 获取用户权限
+    * @param infoDatas Tuple(id, cal_type, data_type, operate_type, export_path)
+    * @param o2oAuths 权限
+    * @param authType 权限类型：cal:计算，operate
+    * @return 具有权限的用户
+    */
+根据authType类型，提取infoDatas中信息，authType为cal类型则提取第二项，authType为operate类型则提取第4项，其余都提取第四项
+将infoDatas中每一条权限类型与o2oAuths中有交集的项取出，提取用户ID
+}
+
+execute(jobId: String, hc: HiveContext, calTypes: String, firstSourceType: String,
+              infoDatas: ArrayBuffer[(String, String, String, String, String)],
+              dataTypes: mutable.Set[String], rank_date: String, firstday: String,
+              lastday: String, preday: String, afterday: String, datetype: String,
+              lastPar3monthly: String, lastParPermanent: String)
+/**
+    * 执行o2o计算、导入carbondata、导出数据文件到HDFS
+    *
+    * @param hc HiveContext
+    * @param calTypes 计算类型，1：画像，2：媒介，3：常驻地区，4：客群来源，5：客群去向，6：周边居民
+    * @param firstSourceType 第一个来源类型
+    * @param infoDatas Tuple(id, cal_type, data_type, operate_type, export_path)
+    * @param dataTypes 数据类型：1 IMEI，2 MAC，3 PHONE，4 IDFA
+    * @param rank_date 日期
+    * @param firstday 计算周期第一天，由前端传入，以日为周期等于rank_date；以周为周期，为上周一；以月为周期，为上月1号
+    * @param lastday 计算周期最后一天，由前端传入，以日为周期等于rank_date；以周为周期，为上周日；以月为周期，为上月1号
+    * @param preday 向前追溯的第一天，默认为10天前
+    * @param afterday 向后追溯的最后一天，默认为10天后
+    * @param datetype 日期类型：daily,weekly,monthly
+    * @param lastPar3monthly rp_sdk_dmp.rp_device_location_3monthly最后一个分区
+    * @param lastParPermanent rp_sdk_dmp.rp_device_location_permanent最后一个分区
+    */
